@@ -3,9 +3,7 @@ const answer = Array.from(document.querySelectorAll(".answer"))
 const questions = document.querySelectorAll(".question-item")
 const alert = document.getElementById("alert")
 
-
 form.addEventListener("submit", e => {
-
   e.preventDefault()
 
   questions.forEach(questionItem => {
@@ -13,16 +11,22 @@ form.addEventListener("submit", e => {
     questionItem.classList.add("incorrect")
   })
 
+  score()
+
+  setTimeout(() => {
+    window.location.reload()
+  }, 3000)
+})
+
+function score() {
+  let j = 0
   const filtered = answer.filter(answer => answer.checked)
-
   for (let i = 0; i < filtered.length; i++) {
+    j += 1
     if (filtered[i].value == "true") {
-      console.log("true")
-      let j = 3
-
       questions[i].classList.remove("incorrect")
       questions[i].classList.add("correct")
-      console.log(j)
+
       if (j == questions.length) {
         alert.classList.add("active")
 
@@ -31,10 +35,7 @@ form.addEventListener("submit", e => {
         }, 1000)
       }
     } else {
-      console.log("false")
+      j = 0
     }
   }
-  setTimeout(() => {
-    window.location.reload()
-  }, 6000)
-})
+}
